@@ -75,37 +75,62 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Restaurants'),
+        titleTextStyle: TextStyle(
+          color: Colors.black,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+        backgroundColor: Colors.purple[50],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              onChanged: (query) =>
-                ref.read(namesProvider.notifier).filterNames(query),
-              decoration: InputDecoration(
-                hintText: 'Search',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.purple[50]!,
+              Colors.purple[400]!,
+            ],
+          ),  
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (query) =>
+                    ref.read(namesProvider.notifier).filterNames(query),
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: names.isEmpty
-                ? Center(child: Text('No results found'))
-                : ListView.builder(
-                    itemCount: names.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(names[index]),
-                      );
-                    },
-                  ),
-          ),
-        ],
+            Expanded(
+              child: names.isEmpty
+                  ? Center(child: Text('No results found'))
+                  : ListView.builder(
+                      itemCount: names.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(
+                            names[index],
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }
