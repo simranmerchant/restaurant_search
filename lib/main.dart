@@ -111,7 +111,6 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     ref.read(namesProvider.notifier).filterNames(query),
                 decoration: InputDecoration(
                   hintText: 'Search',
-                  hintStyle: const TextStyle(color: Colors.black),
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
