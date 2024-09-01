@@ -21,7 +21,7 @@ class NamesNotifier extends StateNotifier<List<String>> {
       // Update the state to reflect the loaded data
       state = _names;
     } catch (e) {
-      print("Error loading JSON data: $e");
+      print("Error loading JSON data: $e"); // change to logger
     }
   }
 
@@ -52,6 +52,61 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: SearchScreen(),
+    );
+  }
+}
+
+class SearchScreen extends ConsumerStatefulWidget {
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends ConsumerState<SearchScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(namesProvider.notifier).loadNames();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // rebuild when namesprovider changes 
+    final names = ref.watch(namesProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Restaurants'),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (query) =>
+                ref.read(namesProvider.notifier).filterNames(query),
+              decoration: InputDecoration(
+                hintText: 'Search',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: names.isEmpty
+                ? Center(child: Text('No results found'))
+                : ListView.builder(
+                    itemCount: names.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(names[index]),
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }
