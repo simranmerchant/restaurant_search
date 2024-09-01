@@ -1,16 +1,44 @@
-# flutter_application_3
+# Flutter Restaurant Search App
 
-A new Flutter project.
+This Flutter app allows users to search for restaurant names from a local JSON file. The app uses Riverpod for state management and Logger for logging. The UI features a search bar and a list of restaurant names that can be filtered by user input.
+
+## Features
+
+- **Search Functionality:** Users can type in the search bar to filter the list of restaurant names.
+- **State Management:** Utilizes Riverpod for state management.
+- **Logging:** Uses the Logger package to log errors.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- [Flutter SDK](https://flutter.dev/docs/get-started/install)
+- [Dart SDK](https://dart.dev/get-dart)
+- [Android Studio](https://developer.android.com/studio) (for running the Android emulator)
+  - Make sure to install the Android SDK and set up an Android Virtual Device (AVD) from within Android Studio.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Installation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/yourusername/restaurant_search_app.git
+    cd restaurant_search_app
+    ```
+
+2. **Install dependencies:**
+
+    Run the following command to install the required dependencies:
+
+    ```bash
+    flutter pub get
+    ```
+
+3. **Run the app:**
+
+    Use the following command to run the app on an emulator or connected device:
+
+    ```bash
+    flutter run
+    ```
+
