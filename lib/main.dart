@@ -2,12 +2,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
+
 
 
 class NamesNotifier extends StateNotifier<List<String>> {
   NamesNotifier() : super([]);
 
   List<String> _names = [];
+  Logger logger = Logger();
 
   void loadNames() async {
     try {
@@ -21,7 +24,7 @@ class NamesNotifier extends StateNotifier<List<String>> {
       // Update the state to reflect the loaded data
       state = _names;
     } catch (e) {
-      print("Error loading JSON data: $e"); // change to logger
+      logger.e('Error loading names: $e');
     }
   }
 
@@ -41,22 +44,26 @@ final namesProvider = StateNotifierProvider<NamesNotifier, List<String>>((ref) {
 
 void main() {
   runApp(
-    ProviderScope(
+    const ProviderScope(
       child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: SearchScreen(),
     );
   }
 }
 
 class SearchScreen extends ConsumerStatefulWidget {
+  const SearchScreen({super.key});
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -76,8 +83,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Restaurants'),
-        titleTextStyle: TextStyle(
+        title: const Text('Restaurants'),
+        titleTextStyle: const TextStyle(
           color: Colors.black,
           fontSize: 24,
           fontWeight: FontWeight.bold,
@@ -104,23 +111,24 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     ref.read(namesProvider.notifier).filterNames(query),
                 decoration: InputDecoration(
                   hintText: 'Search',
-                  prefixIcon: Icon(Icons.search),
+                  hintStyle: const TextStyle(color: Colors.black),
+                  prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                  ),
+                    ),
                 ),
               ),
             ),
             Expanded(
               child: names.isEmpty
-                  ? Center(child: Text('No results found'))
+                  ? const Center(child: Text('No results found'))
                   : ListView.builder(
                       itemCount: names.length,
                       itemBuilder: (context, index) {
                         return ListTile(
                           title: Text(
                             names[index],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               color: Colors.black,
                             ),
